@@ -21,6 +21,15 @@ app.use((req, res, next) => {
 //routes
 app.use("/", indexRouter);
 
+// Error handling middleware
+app.use((err, req, res, next) => {
+  // Set the status code to 500 (Internal Server Error)
+  res.status(500);
+  // Render the error page with the error message
+  res.render("error", { message: err.message });
+  next();
+});
+
 // start server
 const PORT = config.PORT;
 app.listen(PORT, () => {

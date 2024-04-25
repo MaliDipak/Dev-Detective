@@ -16,8 +16,9 @@ async function getUserByUsername(req, res) {
     const userFollowers = await userService.getUsersFollowers(username);
     const userFollowing = await userService.getUsersFollowing(username);
 
-    if (!user || !userFollowers || !userFollowing) {
+    if (!user) {
       console.log("fetching user data error");
+      throw new Error("error");
     }
 
     let allConnections = {};
@@ -50,7 +51,7 @@ async function getUserByUsername(req, res) {
     //
   } catch (error) {
     console.error("Error fetching user:", error);
-    res.status(500).json({ error: "Internal server error" });
+    res.status(500);
   }
 }
 
